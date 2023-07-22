@@ -25,6 +25,11 @@ module.exports = {
                         ]
                     ],
                 }
+            },
+            {
+                test: /\.less$/,
+                include: path.resolve(__dirname, "src"),
+                use: ['style-loader', 'css-loader', 'less-loader']
             }
         ]
     },

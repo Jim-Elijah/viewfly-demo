@@ -8,14 +8,13 @@ export default function StartUp() {
         console.log('render');
         return (
             <div>
-                <h2>{title}</h2>
+                <p>{title}</p>
                 <span>{number()}</span>
                 <button style="margin: 6px;" onClick={() => {
                     number.set(number() + 1)
                 }}>
                     +1
                 </button>
-                <hr />
             </div>
         )
     }
