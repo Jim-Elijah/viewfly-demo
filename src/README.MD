@@ -69,8 +69,33 @@ function App() {
 Viewfly 采用依赖收集的方式实现组件更新（Proxy，类似Vue3），Viewfly 会在调用渲染函数时记录渲染内容使用到的 Siganl，当这些 Signal 数据产生变化时，则会触发组件重新渲染。需要注意的是，==组件的渲染是异步的==，所以当你改变了某一个 Signal 的值时，并不能立即获取到最新的渲染结果。
 
 
+## JSX
+基本和React一样，除了class绑定。viewfly不用className，可以直接用class，class支持数组、对象，这点和Vue相似。
+```jsx
+
+function App() {
+  const isShow = useSignal(false)
+  return () => {
+    return (
+      <div class="container box">
+        <div class={['nav', 'bg-gray']}>
+          数组
+        </div>
+        <div class={{'content': true, 'is-show': isShow()}}>
+          对象
+        </div>
+        <div class={['footer', {'active': isShow()}]}>
+          数组和对象组合
+        </div>
+      </div>
+    )
+  }
+}
+```
+
+
 ## 子组件
-和React基本一样，父组件传prop给子组件，子组件在props拿到父组件传下来的所有prop。children
+和React基本一样，包括父子组件通信方式、props、children
 需要注意的是，==当我们把 props 解构后，将只能拿到初始的值，丢失响应式==
 
 ## 数据共享
@@ -82,3 +107,6 @@ React Hook有很多限制，而 Signal 没有 Hook 规则和闭包陷阱，可�
 
 ## useRef
 Viewfly 中同一个 Ref 对象，可以绑定到多个 DOM 节点上。虚拟 DOM 节点的 ref 属性还可以绑定一组 Ref 对象。
+
+## 组件方法
+组件除了返回渲染函数外，还可以返回一个对象，该对象至少包含$render方法($render就是渲染函数)。父组件可以通过useRef获取到子组件返回的对象，并可访问对象上的属性和方法。

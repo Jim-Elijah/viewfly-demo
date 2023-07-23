@@ -5,7 +5,11 @@
   "scripts": {
     "dev": "webpack serve --config webpack.config.js --progress --color"
   },
-  "author": "",
+  "author": "jim",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jim-Elijah/viewfly-demo"
+  },
   "license": "ISC",
   "dependencies": {
     "@viewfly/core": "^0.0.15",

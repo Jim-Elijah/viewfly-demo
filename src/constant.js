@@ -35,3 +35,5 @@ export const basicTabItemList = [
         key: 'UseRef'
     }
 ]
+
+export const tabPostionList = ['top', 'left', 'right', 'bottom']

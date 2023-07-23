@@ -1,7 +1,11 @@
 
 import { useSignal, useEffect } from '@viewfly/core'
 
-const title = `useEffect demo`;
+const infos = [
+    `一方面类似Vue3的watch，可以监听一个或多个值`,
+    `另一方面类似React的useEffect，可以返回一个函数用于清理工作`,
+    `但是viewfly只能监听signal，没有immediate、deep等，返回了一个unlisten函数`,
+]
 
 const count1 = useSignal(10)
 const count2 = useSignal(20)
@@ -43,14 +47,19 @@ const update = (key) => {
 export default function Component() {
     return () => {
         return <>
-            <p>{title}</p>
-            <div>count1: {count1()} count2: {count2()}</div>
-            <button style="margin: 6px;" onClick={() => update(count1)}>
-                count1++
-            </button>
-            <button style="margin: 6px;" onClick={() => update(count2)}>
-                count2++
-            </button>
+            <ul style="padding-left: 0.2rem;">
+                {
+                    infos.map(item => <li>{item}</li>)
+                }
+            </ul>
+            <div style="display: flex; align-items: center;">
+                <div>count1: {count1()}</div>
+                <button style="margin: 6px;" onClick={() => update(count1)}>count1++</button>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <div>count2: {count2()}</div>
+                <button style="margin: 6px;" onClick={() => update(count2)}>count2++</button>
+            </div>
         </>
     }
 }

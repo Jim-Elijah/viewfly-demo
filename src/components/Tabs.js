@@ -1,4 +1,6 @@
-import { useSignal } from '@viewfly/core'
+import { useSignal, onPropsChanged } from '@viewfly/core'
+import { tabPostionList } from '../constant'
+import "./tabs.less"
 /**
  * 
  * @param {object} props 
@@ -10,11 +12,9 @@ import { useSignal } from '@viewfly/core'
  * @returns 
  */
 
-const tabPostionArr = ['top', 'left', 'right', 'bottom']
-
 export default function Tabs(props) {
     const defaultActiveKey = props.defaultActiveKey || props.items[0]?.key
-    const defaultTabPosition = tabPostionArr.find(item => item === props.tabPosition) || tabPostionArr[0];
+    const defaultTabPosition = tabPostionList.find(item => item === props.tabPosition) || tabPostionList[0];
     const activeKey = useSignal(defaultActiveKey)
     const tabPosition = useSignal(defaultTabPosition)
 
@@ -31,6 +31,11 @@ export default function Tabs(props) {
             props.onTabClick(id, e)
         }
     }
+
+    onPropsChanged((newProps, oldProps) => {
+        console.log('tabs onPropsChanged', newProps, oldProps);
+        tabPosition.set(props.tabPosition)
+    })
     console.log('Tabs props', props);
     return () => {
         const Child = props.items.find(item => item.key === activeKey())?.children || ''
@@ -47,11 +52,10 @@ export default function Tabs(props) {
         </div>
         return <div class={["viewfly-tabs", `viewfly-tabs-${tabPosition()}`]}>
             {
-                tabPostionArr.slice(0, 2).includes(tabPosition()) ? <>
-                    {tabsNav} {tabsContent}
+                tabPostionList.slice(0, 2).includes(tabPosition()) ? <>
+                    {tabsNav}{tabsContent}
                 </> : <>
-                    {tabsContent}
-                    {tabsNav}
+                    {tabsContent}{tabsNav}
                 </>
             }
         </div>
