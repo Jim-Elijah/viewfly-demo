@@ -9,13 +9,17 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
+      - name: checkout
+        uses: actions/checkout@v3
 
-      - name: Build and Deploy
+      - name: build
+        run: |
+          npm install
+          npm run dev
+    
+      - name: deploy
         uses: JamesIves/github-pages-deploy-action@v4
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist
-          BUILD_SCRIPT: npm install && npm run build
+        with:
+          folder: dist
+          ssh-key: ${{ secrets.ACCESS_TOKEN }}
+          
